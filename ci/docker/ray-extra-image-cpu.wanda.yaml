@@ -7,7 +7,8 @@ dockerfile: ci/docker/ray-image.Dockerfile
 build_args:
   - PYTHON_VERSION
   - ARCH_SUFFIX
-  - BASE_IMAGE=cr.ray.io/rayproject/ray-py$PYTHON_VERSION-cpu-base-extra$ARCH_SUFFIX
-  - RAY_WHEEL_IMAGE=cr.ray.io/rayproject/ray-wheel-py$PYTHON_VERSION$ARCH_SUFFIX
+  - IMAGE_TYPE=ray
+  - PLATFORM=cpu
+  - BASE_VARIANT=base-extra
   - RAY_COMMIT=$BUILDKITE_COMMIT
   - RAY_VERSION

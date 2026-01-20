@@ -1,17 +1,23 @@
 # syntax=docker/dockerfile:1.3-labs
 #
 # Ray Image Builder
-# =================
+# ==============================
 # Installs the Ray wheel into a base image (CPU or CUDA), includes
 # pip freeze output for reproducibility.
 #
-ARG BASE_IMAGE
-ARG RAY_WHEEL_IMAGE
+# Supports ray and ray-llm image types, with base or base-extra variants.
+#
+ARG PYTHON_VERSION=3.10
+ARG PLATFORM=cpu
+ARG ARCH_SUFFIX=
+ARG IMAGE_TYPE=ray
+ARG BASE_VARIANT=base
+ARG BASE_IMAGE=cr.ray.io/rayproject/${IMAGE_TYPE}-py${PYTHON_VERSION}-${PLATFORM}-${BASE_VARIANT}${ARCH_SUFFIX}
+ARG RAY_WHEEL_IMAGE=cr.ray.io/rayproject/ray-wheel-py${PYTHON_VERSION}${ARCH_SUFFIX}
 
 FROM ${RAY_WHEEL_IMAGE} AS wheel-source
 FROM ${BASE_IMAGE}
 
-ARG PYTHON_VERSION=3.10
 ARG RAY_COMMIT=unknown-commit
 ARG RAY_VERSION=3.0.0.dev0
 
